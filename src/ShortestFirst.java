@@ -3,9 +3,10 @@ import java.util.ArrayList;
 public class ShortestFirst extends Scheduler
 {
 
-    public ShortestFirst(ArrayList<Process> processes)
+
+    public ShortestFirst(ArrayList<Process> processes, int conSw)
     {
-        super(processes);
+        super(processes, conSw);
     }
 
     public void execute()
@@ -26,7 +27,7 @@ public class ShortestFirst extends Scheduler
         int smallestIdx=0;
         for(int i=0; i<processes.size(); i++)
         {
-            if (processes.get(i).arrivalTime<= GUI.timer &&
+            if (processes.get(i).arrivalTime<= timer &&
                     processes.get(i).burstTime< processes.get(smallestIdx).burstTime)
                 smallestIdx = i;
         }

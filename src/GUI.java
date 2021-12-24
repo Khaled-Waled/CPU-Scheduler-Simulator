@@ -2,27 +2,40 @@ import java.util.ArrayList;
 
 public class GUI
 {
-    public int numberOfProcess=1;
-    public int totalRunningTime=1;
-    public static int timer=0;
-    public static GUI instance = null;
-    public static GUI getInstance(int n, int totalTime)
-    {
-        if (instance == null)
-            instance = new GUI(n,totalTime);
+    public static int numberOfProcess=1;
+    public static int totalRunningTime=1;
+    private static ArrayList<Event> events= new ArrayList<>();
 
-        return instance;
-    }
-    private GUI(int n,int totalTime)
+    public GUI()
     {
-        this.numberOfProcess = n;
-        this.totalRunningTime= totalTime;
-        this.timer=0;
-        //TODO //Show the main window
+        events = new ArrayList<>();
     }
+
     static void receiveEvent(Event event)
     {
-        timer+=event.duration;
-        //TODO //draw new elements on the table
+        events.add(event);
     }
+    public static void drawEvents()
+    {
+        //TODO //GUI IMPLEMENTATION
+    }
+    public static void writeEvents()
+    {
+        for(Event event:events)
+        {
+            if(event.type==0)
+            {
+                System.out.println(event.start+": Process "+event.process.pid+ " is running");
+            }
+            else if (event.type==1)
+            {
+                System.out.println(event.start+": Context Switch");
+            }
+            else
+            {
+                System.out.println(event.start+": IDLE");
+            }
+        }
+    }
+
 }

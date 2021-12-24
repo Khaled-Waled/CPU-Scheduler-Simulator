@@ -21,5 +21,22 @@ public class Process
         this.quantum = quantum;
     }
 
-
+    /*
+    public Process(int v)       //Used only as a declaration of a context switch or Idle time
+    {
+        if(v<1)
+        {
+            this.name = "context switch";
+            this.pid = -1;
+            this.color = new Color(50,50,50);
+        }
+        else
+        {
+            this.name = "IDLE";
+            this.pid = -2;
+            this.burstTime=v;
+            this.color = new Color(100,100,100);
+        }
+    }
+    */
 }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class PiriorityScheduler extends Scheduler {
 
     public PiriorityScheduler(ArrayList<Process> processes) {
-        super(processes);
+        super(processes,0);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class PiriorityScheduler extends Scheduler {
     public Process getLeastPriority() {
         int leastPriority_index = 0;
         for (int i = 0; i < processes.size(); i++) {
-            if (processes.get(i).arrivalTime <= GUI.timer &&
+            if (processes.get(i).arrivalTime <= GUI.totalRunningTime &&
                     processes.get(i).priority < processes.get(leastPriority_index).priority)
                 leastPriority_index = i;
         }

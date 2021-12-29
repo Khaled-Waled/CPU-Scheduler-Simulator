@@ -9,9 +9,8 @@ public class Process {
     public int priority;
     public int quantum;
     public int AGATFactor;
-    public int remainingTime;
     public int waitingTime;
-    public int TurnAroundTime;
+    public int turnAroundTime;
 
     public Process(String name, int pid, Color color, int arrivalTime, int burstTime, int priority, int quantum) {
         this.name = name;
@@ -21,6 +20,8 @@ public class Process {
         this.burstTime = burstTime;
         this.priority = priority;
         this.quantum = quantum;
+        this.waitingTime = 0;
+        this.turnAroundTime =0;
     }
 
 }

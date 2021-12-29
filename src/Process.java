@@ -9,6 +9,9 @@ public class Process {
     public int priority;
     public int quantum;
     public int AGATFactor;
+    public int remainingTime;
+    public int waitingTime;
+    public int TurnAroundTime;
 
     public Process(String name, int pid, Color color, int arrivalTime, int burstTime, int priority, int quantum) {
         this.name = name;

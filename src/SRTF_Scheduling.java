@@ -10,24 +10,45 @@ public class SRTF_Scheduling extends Scheduler
 
     public void execute()
     {
-        ArrayList<Process> tempProcesses = new ArrayList<>();
-        tempProcesses.addAll(processes);
-        while (true)
+        ArrayList<Process> tempPros = new ArrayList<>();
+        tempPros.addAll(processes);
+
+        ArrayList<Process> queue = new ArrayList<>();
+
+        while (tempPros.size()>0)
         {
-            int smallest = getSmallestRemainingTime(tempProcesses);
-            if(currentPId != tempProcesses.get(smallest).pid && timer!=0)
+            for(Process process: tempPros){
+                if(process.arrivalTime == timer){
+                    queue.add(process);
+                }
+            }
+
+            if(queue.size() == 0){
+                timer++;
+                GUI.receiveEvent(new Event(timer, 2));
+                continue;
+            }
+
+            int smallest = getSmallestRemainingTime(queue);
+            if(currentPId != queue.get(smallest).pid && timer!=0)
                 GUI.receiveEvent(new Event(timer+=contextSwitch, 1));
 
-
-            currentPId = tempProcesses.get(smallest).pid;
-            tempProcesses.get(smallest).burstTime--;
-            tempProcesses.get(smallest).priority=timer;
-            GUI.receiveEvent(new Event(tempProcesses.get(smallest),timer++));
-            if(tempProcesses.get(smallest).burstTime==0) tempProcesses.remove(smallest);
-
-            if(tempProcesses.size()<1) break;
+            currentPId = queue.get(smallest).pid;
+            executeProcess(queue, smallest);
+            if(queue.get(smallest).burstTime <= 0){
+                queue.remove(smallest);
+                tempPros.removeIf(process -> process.pid == currentPId);
+            }
         }
     }
+
+    void executeProcess(ArrayList<Process> tempProcesses, int smallest) {
+        if(tempProcesses.get(smallest).burstTime <= 0)return;
+        tempProcesses.get(smallest).burstTime--;
+        tempProcesses.get(smallest).priority=timer;
+        GUI.receiveEvent(new Event(tempProcesses.get(smallest),timer++));
+    }
+
     private int getSmallestRemainingTime(ArrayList<Process> processes)
     {
         int smallestIdx=0;
@@ -38,7 +59,7 @@ public class SRTF_Scheduling extends Scheduler
                     processes.get(i).burstTime + processes.get(i).priority< minBurstTime)
             {
                 smallestIdx = i;
-                minBurstTime = processes.get(i).burstTime;
+                minBurstTime = processes.get(i).burstTime + processes.get(i).priority;
             }
         }
         return smallestIdx;

@@ -9,7 +9,10 @@ public class AGAT_Scheduling extends Scheduler {
 
     public void execute() {
         ArrayList<Process> allPros = new ArrayList<>();
-        allPros.addAll(processes);
+        for (Process process : processes) {
+            if (process.burstTime == 0) continue;
+            allPros.add(process);
+        }
 
         ArrayList<Process> queue = new ArrayList<>();
 
@@ -18,23 +21,20 @@ public class AGAT_Scheduling extends Scheduler {
 
 
         int sliceTimer = 0;
-
-        int cntr = 0;
         while (allPros.size() > 0) {
-//            if (timer == 11) {
-//                System.out.println("here");
-//            }
-//            cntr++;
 
-            for (Process process : processes) {
-
+            for (Process process : allPros) {
                 if (process.arrivalTime == timer && !queue.contains(process)) {
                     queue.add(process);
                 }
             }
 
             updateAGATFactor(queue);
-            if (queue.size() == 0) continue;
+            if (queue.size() == 0) {
+                timer++;
+                continue;
+            }
+
 
             if (queue.get(0).burstTime == 0) {
                 sliceTimer = 0;
@@ -97,9 +97,6 @@ public class AGAT_Scheduling extends Scheduler {
 
     void executeContextSwitch(ArrayList<Process> queue) {
         GUI.receiveEvent(new Event(timer += contextSwitch, 1));
-
-//        queue.add(queue.get(0));
-//        queue.remove(0);
     }
 
     void updateAGATFactor(ArrayList<Process> pros) {

@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public class ShortestFirst extends Scheduler
 {
-
-
     public ShortestFirst(ArrayList<Process> processes, int conSw)
     {
         super(processes, conSw);
@@ -11,26 +9,30 @@ public class ShortestFirst extends Scheduler
 
     public void execute()
     {
-        System.out.println("Getting the shortest one first");
-        //GUI.receiveEvent(new Event(processes.get(0),5)); //use this to send events to the gui
-        //TODO //Still have starvation
-        for(int i=0; i<processes.size();i++)
-        {
-            Process smallest = getSmallest();
-            GUI.receiveEvent(new Event(smallest,smallest.burstTime)); //because it is Preemptive
-            processes.remove(smallest);
+        ArrayList<Process> tempPros = new ArrayList<>();
+        tempPros.addAll(processes);
+
+        /*
+        int idx = getSmallest(tempPros);
+        for(int i=0; i<tempPros.get(idx).burstTime; i++){
+            GUI.receiveEvent(new Event(tempPros.get()));
+
         }
+*/
+
+
+
     }
 
-    private Process getSmallest()
+    private int getSmallest(ArrayList<Process> pros)
     {
         int smallestIdx=0;
-        for(int i=0; i<processes.size(); i++)
+        for(int i=0; i<pros.size(); i++)
         {
-            if (processes.get(i).arrivalTime<= timer &&
-                    processes.get(i).burstTime< processes.get(smallestIdx).burstTime)
+            if (pros.get(i).arrivalTime<= timer &&
+                    pros.get(i).burstTime< pros.get(smallestIdx).burstTime)
                 smallestIdx = i;
         }
-        return processes.get(smallestIdx);
+        return smallestIdx;
     }
 }

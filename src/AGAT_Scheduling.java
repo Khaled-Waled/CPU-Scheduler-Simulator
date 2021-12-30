@@ -37,6 +37,7 @@ public class AGAT_Scheduling extends Scheduler {
 
 
             if (queue.get(0).burstTime == 0) {
+                processes.get(getProcessByPId(processes,queue.get(0).pid)).turnAroundTime=timer;
                 sliceTimer = 0;
                 executeContextSwitch(queue);
                 allPros.remove(getProcessByPId(allPros, queue.get(0).pid));

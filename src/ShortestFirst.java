@@ -47,6 +47,7 @@ public class ShortestFirst extends Scheduler
 
             if (queue.get(smallest).burstTime == 0)
             {
+                processes.get(getProcessByPId(processes,queue.get(smallest).pid)).turnAroundTime=timer;
                 tempPros.removeIf(process -> process.pid == currentPId);
                 queue.remove(smallest);
                 smallest = getSmallest(queue);

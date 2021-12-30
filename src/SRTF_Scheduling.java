@@ -36,6 +36,7 @@ public class SRTF_Scheduling extends Scheduler
             currentPId = queue.get(smallest).pid;
             executeProcess(queue, smallest);
             if(queue.get(smallest).burstTime <= 0){
+                processes.get(getProcessByPId(processes,queue.get(smallest).pid)).turnAroundTime=timer;
                 queue.remove(smallest);
                 tempPros.removeIf(process -> process.pid == currentPId);
             }

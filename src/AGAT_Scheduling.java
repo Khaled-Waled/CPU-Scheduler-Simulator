@@ -97,7 +97,9 @@ public class AGAT_Scheduling extends Scheduler {
     }
 
     void executeContextSwitch(ArrayList<Process> queue) {
-        GUI.receiveEvent(new Event(timer += contextSwitch, 1));
+        for(int i=0; i<contextSwitch; i++) {
+            GUI.receiveEvent(new Event(timer++, 1));
+        }
     }
 
     void updateAGATFactor(ArrayList<Process> pros) {

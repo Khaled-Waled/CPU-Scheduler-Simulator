@@ -30,9 +30,10 @@ public class SRTF_Scheduling extends Scheduler
             }
 
             int smallest = getSmallestRemainingTime(queue);
-            if(currentPId != queue.get(smallest).pid && timer!=0)
-                GUI.receiveEvent(new Event(timer+=contextSwitch, 1));
-
+            if(currentPId != queue.get(smallest).pid && timer!=0) {
+                GUI.receiveEvent(new Event(timer, 1));
+                timer += contextSwitch;
+            }
             currentPId = queue.get(smallest).pid;
             executeProcess(queue, smallest);
             if(queue.get(smallest).burstTime <= 0){

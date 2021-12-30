@@ -37,8 +37,8 @@ public class ShortestFirst extends Scheduler
 
             if (queue.get(smallest).pid != currentPId)  //Context Switch
             {
-                timer += contextSwitch;
                 GUI.receiveEvent(new Event(timer, 1));
+                timer += contextSwitch;
             }
 
             currentPId = queue.get(smallest).pid;

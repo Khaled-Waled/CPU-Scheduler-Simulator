@@ -34,8 +34,8 @@ public class PriorityScheduler extends Scheduler {
             }
 
             if (queue.get(smallest).pid != currentPId) {
-                timer += contextSwitch;
                 GUI.receiveEvent(new Event(timer, 1));
+                timer += contextSwitch;
             }
             currentPId = queue.get(smallest).pid;
 

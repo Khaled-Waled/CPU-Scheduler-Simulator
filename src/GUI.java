@@ -86,7 +86,8 @@ public class GUI {
             }
         }
         scheduler.execute();
-        drawEvents() ;
+        drawEvents();
+        writeEvents();
 	}
 	
 }

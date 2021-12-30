@@ -47,12 +47,7 @@ public class GuiNew extends JFrame implements ActionListener {
 	JTextField txtQuantum = new JTextField() ;
 	JTextField txtFactor = new JTextField() ;
 	JTextField txtBurst = new JTextField () ; 
-	
-	JPanel runningPanel = new JPanel () ; 
-	JPanel arr[] = new JPanel[100] ; 	
-	JPanel trie = new JPanel() ; 
-	JPanel panel2 = new JPanel() ; 
-	
+
 	JRadioButton priorityScheduling = new JRadioButton("Priority") ; 
 	JRadioButton sjf = new JRadioButton("SJF") ; 
 	JRadioButton srtf = new JRadioButton("SRTF") ; 
@@ -68,7 +63,6 @@ public class GuiNew extends JFrame implements ActionListener {
 	int priorityx ; 
 	int burstx ; 
 	static int cSwitch = 0  ;
-	static int counter = 0 ;
 	static int type = 0; 
 	
 	static ArrayList<Process> processes = new ArrayList<>();
@@ -131,61 +125,18 @@ public class GuiNew extends JFrame implements ActionListener {
 		group.add(srtf);
 		group.add(sjf);
 		group.add(agat);
-		//this.add(runningPanel) ; 
-		runningPanel.setBounds(0,600,1280,80) ; 
-		runningPanel.setBackground(Color.gray);
-		//this.add(trie) ; 
-		trie.setBounds(400,0,400,400);
-		trie.setBackground(Color.white); 
-		
-		trie.setLayout(new FlowLayout()) ; 
-		
-		//JTextArea outputTextArea = new JTextArea("",5,20);
-	    JScrollPane scrollPane = new JScrollPane();    
-	    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-	   // runningPanel.add(scrollPane);
-	    scrollPane.setPreferredSize(new Dimension(1200,10));
-//	    txtName.setPreferredSize(new Dimension(20,20));
-//	    trie.add(txtName) ; 
-	    for (int i = 0 ; i < 3 ; i ++)
-	    {
-	    	JPanel p = new JPanel() ; 
-	    	p.setPreferredSize(new Dimension(20,20));
-	    	p.setBackground(Color.red);
-	    	runningPanel.add(p) ; 
-	    	try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    	
-	    	
-	    }
-		
-		
 	}
-	
-	
-	
-	
-	
-
-
-
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e)
+	{
 		if (e.getSource() == colorChooser)
 		{
 			JColorChooser choose = new JColorChooser() ;
 			chooserColor = choose.showDialog(null, "Choose the Process color", Color.red);
-					
-			
+
 		}
 		else if (e.getSource() == Add)
 		{
-			
 			arrival = Integer.parseInt(txtArrival.getText()) ; 
 			quantumTime = Integer.parseInt(txtPriority.getText()) ; 
 			cSwitch = Integer.parseInt(txtFactor.getText()) ; 
@@ -193,20 +144,6 @@ public class GuiNew extends JFrame implements ActionListener {
 			priorityx = Integer.parseInt(txtPriority.getText()) ; 
 			burstx = Integer.parseInt(txtBurst.getText());
 			processes.add(new Process(txtName.getText(), pid, chooserColor, arrival, burstx, priorityx, quantumTime));
-			panel2.setBackground(chooserColor);
-			panel2.setPreferredSize(new Dimension(20,20));
-			//trie.add(panel2); 
-			//arr[counter] = panel2 ; 
-			JLabel data = new JLabel() ; 
-			data.setText(txtName.getText());
-			trie.add(data) ; 
-			System.out.println("reached") ; 
-			
-//			panel2.setBounds(200,299,40,40) ; 
-//			this.add(panel2) ; 
-			arr[counter] = panel2 ; 
-			trie.add(arr[counter]) ; 
-			counter ++ ;
 			
 			txtName.setText("") ;
 			txtID.setText("");
@@ -221,8 +158,7 @@ public class GuiNew extends JFrame implements ActionListener {
 		else if (e.getSource() == Run) 
 		{
 			this.dispose() ; 
-			GUI gui = new GUI() ; 
-
+			GUI gui = new GUI() ;
 		}
 			
 		else if (e.getSource() == priorityScheduling)
@@ -240,13 +176,8 @@ public class GuiNew extends JFrame implements ActionListener {
 		else if (e.getSource() == agat)
 		{
 			type = 3;
-		}	
 		}
-		
-	
-	
-
-
+	}
 }
 
 

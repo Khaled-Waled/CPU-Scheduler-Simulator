@@ -11,7 +11,7 @@ public class AGAT_Scheduling extends Scheduler {
         ArrayList<Process> allPros = new ArrayList<>();
         for (Process process : processes) {
             if (process.burstTime == 0) continue;
-            allPros.add(process);
+            allPros.add(new Process(process));
         }
 
         ArrayList<Process> queue = new ArrayList<>();
@@ -37,7 +37,8 @@ public class AGAT_Scheduling extends Scheduler {
 
 
             if (queue.get(0).burstTime == 0) {
-                processes.get(getProcessByPId(processes,queue.get(0).pid)).turnAroundTime=timer;
+                processes.get(getProcessByPId(processes,queue.get(0).pid)).turnAroundTime =
+                        timer - processes.get(getProcessByPId(processes,queue.get(0).pid)).arrivalTime;
                 sliceTimer = 0;
                 executeContextSwitch(queue);
                 allPros.remove(getProcessByPId(allPros, queue.get(0).pid));
@@ -56,6 +57,7 @@ public class AGAT_Scheduling extends Scheduler {
             //Non Preemptive phase
             if (sliceTimer == queue.get(0).quantum) {
                 queue.get(0).quantum += 2;
+                System.out.println(timer + " : Process " + queue.get(0).pid + "'s quantum has changed to " + queue.get(0).quantum);
                 sliceTimer = 0;
                 executeContextSwitch(queue);
                 queue.add(queue.get(0));
@@ -67,6 +69,7 @@ public class AGAT_Scheduling extends Scheduler {
 
                 if (smallest != queue.get(0).pid) {
                     queue.get(0).quantum += queue.get(0).quantum - sliceTimer;
+                    System.out.println(timer + " : Process " + queue.get(0).pid + "'s quantum has changed to " + queue.get(0).quantum);
                     queue.add(queue.get(0));
                     queue.remove(0);
 
@@ -89,7 +92,6 @@ public class AGAT_Scheduling extends Scheduler {
         }
 
     }
-
 
     void executeProcess(ArrayList<Process> queue) {
         queue.get(0).burstTime--;
@@ -117,8 +119,12 @@ public class AGAT_Scheduling extends Scheduler {
 
         for (Process process : pros) {
             //if (process.arrivalTime > timer) continue;
+            int oldFactor = process.AGATFactor;
             process.AGATFactor = (10 - process.priority) + (int) Math.ceil((double) process.arrivalTime / v1) +
                     (int) Math.ceil((double) process.burstTime / v2);
+            if(oldFactor != process.AGATFactor)
+                System.out.println(timer + " : Process " + process.pid + "'s AGAT factor has changed to " + process.AGATFactor);
+
         }
     }
 

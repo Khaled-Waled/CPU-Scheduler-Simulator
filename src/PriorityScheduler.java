@@ -9,7 +9,8 @@ public class PriorityScheduler extends Scheduler {
     public void execute() {
 
         ArrayList<Process> tempPros = new ArrayList<Process>();
-        tempPros.addAll(processes);
+        for(Process process:processes)
+            tempPros.add(new Process(process));
         ArrayList<Process> queue = new ArrayList<Process>();
 
         int smallest = 0;
@@ -42,7 +43,8 @@ public class PriorityScheduler extends Scheduler {
             executeProcess(queue, smallest);
 
             if (queue.get(smallest).burstTime == 0) {
-                processes.get(getProcessByPId(processes,queue.get(smallest).pid)).turnAroundTime=timer;
+                processes.get(getProcessByPId(processes,queue.get(smallest).pid)).turnAroundTime =
+                        timer - processes.get(getProcessByPId(processes,queue.get(smallest).pid)).arrivalTime;
                 tempPros.removeIf(process -> process.pid == currentPId);
                 queue.remove(smallest);
 
@@ -52,6 +54,7 @@ public class PriorityScheduler extends Scheduler {
                 int ind = getHighestPriority(queue);
                 queue.get(ind).priority--;
             }
+
         }
     }
 

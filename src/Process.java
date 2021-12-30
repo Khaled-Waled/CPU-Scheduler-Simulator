@@ -24,4 +24,18 @@ public class Process {
         this.turnAroundTime =0;
     }
 
+    //Copy constructor
+    public Process(Process process){
+        this.name = process.name;
+        this.pid = process.pid;
+        this.color = process.color;
+        this.arrivalTime = process.arrivalTime;
+        this.burstTime = process.burstTime;
+        this.priority = process.priority;
+        this.quantum = process.quantum;
+        this.waitingTime = process.waitingTime;
+        this.turnAroundTime = process.turnAroundTime;
+    }
+
+
 }

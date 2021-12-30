@@ -24,5 +24,11 @@ public abstract class Scheduler {
         return -1;
     }
 
+    void updateParameters(){
+        for(Process process:processes){
+            process.waitingTime = process.turnAroundTime - process.burstTime;
+        }
+    }
+
     public abstract void execute();
 }

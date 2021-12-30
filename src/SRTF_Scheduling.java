@@ -11,7 +11,8 @@ public class SRTF_Scheduling extends Scheduler
     public void execute()
     {
         ArrayList<Process> tempPros = new ArrayList<>();
-        tempPros.addAll(processes);
+        for(Process process:processes)
+            tempPros.add(new Process(process));
 
         ArrayList<Process> queue = new ArrayList<>();
 
@@ -37,7 +38,8 @@ public class SRTF_Scheduling extends Scheduler
             currentPId = queue.get(smallest).pid;
             executeProcess(queue, smallest);
             if(queue.get(smallest).burstTime <= 0){
-                processes.get(getProcessByPId(processes,queue.get(smallest).pid)).turnAroundTime=timer;
+                processes.get(getProcessByPId(processes,queue.get(smallest).pid)).turnAroundTime =
+                        timer - processes.get(getProcessByPId(processes,queue.get(smallest).pid)).arrivalTime;
                 queue.remove(smallest);
                 tempPros.removeIf(process -> process.pid == currentPId);
             }
@@ -58,10 +60,10 @@ public class SRTF_Scheduling extends Scheduler
         for(int i=0; i<processes.size(); i++)
         {
             if (processes.get(i).arrivalTime<= timer &&
-                    processes.get(i).burstTime + processes.get(i).priority< minBurstTime)
+                    processes.get(i).burstTime /*+ processes.get(i).priority*/< minBurstTime)
             {
                 smallestIdx = i;
-                minBurstTime = processes.get(i).burstTime + processes.get(i).priority;
+                minBurstTime = processes.get(i).burstTime /*+ processes.get(i).priority*/;
             }
         }
         return smallestIdx;

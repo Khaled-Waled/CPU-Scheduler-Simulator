@@ -10,7 +10,8 @@ public class ShortestFirst extends Scheduler
     public void execute()
     {
         ArrayList<Process> tempPros = new ArrayList<>();
-        tempPros.addAll(processes);
+        for(Process process:processes)
+            tempPros.add(new Process(process));
         ArrayList<Process> queue = new ArrayList<Process>();
 
         int smallest = getSmallest(queue);
@@ -47,7 +48,8 @@ public class ShortestFirst extends Scheduler
 
             if (queue.get(smallest).burstTime == 0)
             {
-                processes.get(getProcessByPId(processes,queue.get(smallest).pid)).turnAroundTime=timer;
+                processes.get(getProcessByPId(processes,queue.get(smallest).pid)).turnAroundTime =
+                        timer - processes.get(getProcessByPId(processes,queue.get(smallest).pid)).arrivalTime;
                 tempPros.removeIf(process -> process.pid == currentPId);
                 queue.remove(smallest);
                 smallest = getSmallest(queue);

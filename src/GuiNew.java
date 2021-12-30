@@ -59,7 +59,7 @@ public class GuiNew extends JFrame implements ActionListener {
     int priorityx;
     int burstx;
     static int cSwitch = 0;
-    static int type = 0;
+    int type = 0;
 
     static ArrayList<Process> processes = new ArrayList<>();
 
@@ -119,10 +119,17 @@ public class GuiNew extends JFrame implements ActionListener {
         this.add(sjf);
         this.add(srtf);
         this.add(agat);
+
         priorityScheduling.setBounds(100, 500, 100, 50);
         sjf.setBounds(200, 500, 100, 50);
         srtf.setBounds(300, 500, 100, 50);
         agat.setBounds(400, 500, 100, 50);
+
+        priorityScheduling.addActionListener(this);
+        sjf.addActionListener(this);
+        srtf.addActionListener(this);
+        agat.addActionListener(this);
+
         group.add(priorityScheduling);
         group.add(srtf);
         group.add(sjf);
@@ -155,15 +162,17 @@ public class GuiNew extends JFrame implements ActionListener {
         } else if (e.getSource() == Run) {
             this.dispose();
 
+            /*
             processes = new ArrayList<>();
-            cSwitch = 1;
+            cSwitch = 0;
 
-            processes.add(new Process("P1", 1, new Color(0, 0, 155), 0, 17, 4, 4));
-            processes.add(new Process("P2", 2, new Color(89, 55, 0), 3, 6, 9, 3));
-            processes.add(new Process("P3", 3, new Color(0, 80, 0), 4, 10, 3, 5));
-            processes.add(new Process("P4", 4, new Color(90, 1, 88), 29, 4, 8, 2));
+            processes.add(new Process("P1", 1, new Color(0, 0, 155), 0, 8, 4, 4));
+            processes.add(new Process("P2", 2, new Color(89, 55, 0), 1, 4, 9, 3));
+            processes.add(new Process("P3", 3, new Color(0, 80, 0), 2, 9, 3, 5));
+            processes.add(new Process("P4", 4, new Color(90, 1, 88), 3, 5, 8, 2));
+            */
 
-            GUI gui = new GUI();
+            GUI gui = new GUI(type);
         } else if (e.getSource() == priorityScheduling) {
             type = 0;
         } else if (e.getSource() == sjf) {
